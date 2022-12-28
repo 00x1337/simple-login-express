@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const secret = '145hythry451rt5yr4ghthty5hty5';
 const mustacheExpress = require('mustache-express');
-
 app.engine('blade.html', mustacheExpress());
 app.set('view engine', 'blade.html');
 
@@ -28,15 +27,15 @@ function authenticate(req, res, next) {
     // Verify the JWT
     try {
         const decoded = jwt.verify(Token, secret);
+        console.log(decoded)
         // JWT is valid, set the user on the request object
-        req.user = decoded;
+        req.id = decoded.id;
         next();
     } catch (err) {
         // JWT is invalid, return 401 Unauthorized
         return res.status(401).send('Unauthorized');
     }
 }
-
 app.get('/', (req, res) => {
     res.send('Hello, World!');
 });
